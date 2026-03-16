@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
+background:linear-gradient(135deg,#73d1f9,#38c8f8,#03b0fa);
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+/* stars */
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{from{opacity:.2} to{opacity:1}}
+
+/* balloons */
+.balloon{
+position:fixed;
+font-size:40px;
+bottom:-50px;
+animation:floatUp linear infinite;
+}
+@keyframes floatUp{to{transform:translateY(-120vh);}}
+
+/* gift */
+#gift{
+font-size:18vw;
+cursor:pointer;
+animation:bounce 1.2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+/* cake */
+#cakeArea{display:none;animation:pop 1s ease;}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+.cake{
+width:180px;
+height:90px;
+background:#f6c7a1;
+border-radius:20px 20px 10px 10px;
+position:relative;
+margin:auto;
+box-shadow:0 10px 0 #d8a47f;
+cursor:pointer;
+}
+.base{
+width:200px;
+height:20px;
+background:#b97a56;
+border-radius:5px;
+margin:auto;
+}
+
+/* candles */
+.candle{
+width:10px;
+height:35px;
+background:white;
+position:absolute;
+cursor:pointer;
+}
+.flame{
+width:12px;
+height:12px;
+background:orange;
+border-radius:50%;
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+animation:flicker .3s infinite alternate;
+}
+@keyframes flicker{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.3)}}
+
+/* confetti */
+.confetti{
+position:fixed;
+width:8px;
+height:8px;
+top:-10px;
+animation:fall linear infinite;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+
+/* fireworks */
+.firework{
+position:fixed;
+font-size:40px;
+animation:boom 1s ease forwards;
+}
+@keyframes boom{0%{transform:scale(.2);opacity:1}100%{transform:scale(2);opacity:0}}
+
+/* slice */
+#slice{
+font-size:70px;
+display:none;
+margin-top:10px;
+}
+
+/* message & titles */
+#title{font-size:7vw;}
+#message{
+font-size:4.5vw;
+margin-top:20px;
+max-width:90%;
+min-height:40px;
+padding:10px;
+}
+
+/* game */
+#game{
+display:none;
+margin-top:20px;
+width:100%;
+}
+#basket{
+font-size:60px;
+position:fixed;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+}
+#score{
+font-size:5vw;
+margin-bottom:10px;
+}
+.fallingCake{position:fixed;font-size:40px;}
+
+/* screen shake */
+@keyframes shake {
+0%{transform:translate(0px,0px);}
+25%{transform:translate(3px,-2px);}
+50%{transform:translate(-3px,2px);}
+75%{transform:translate(2px,-1px);}
+100%{transform:translate(0px,0px);}
+}
+.shake{
+animation:shake 0.3s;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 id="title"> CLICK ME 🎁</h1>
+<div id="gift" onclick="openGift()">🎁</div>
+
+<div id="cakeArea">
+  <div class="cake" onclick="sliceCake()">
+    <div class="candle" style="left:40px" onclick="blow(event,this)"><div class="flame"></div></div>
+    <div class="candle" style="left:85px" onclick="blow(event,this)"><div class="flame"></div></div>
+    <div class="candle" style="left:130px" onclick="blow(event,this)"><div class="flame"></div></div>
+  </div>
+  <div class="base"></div>
+  <div id="slice">🍰</div>
+  <div id="message"></div>
+
+  <div id="game">
+    <h2>catch the cheesecake! 🍰</h2>
+    <div id="score">Score: 0</div>
+    <div id="basket">🧺</div>
+  </div>
+</div>
+
+<audio id="music" loop>
+<source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* stars */
+for(let i=0;i<80;i++){
+let star=document.createElement("div")
+star.className="star"
+star.style.left=Math.random()*100+"vw"
+star.style.top=Math.random()*100+"vh"
+document.body.appendChild(star)
+}
+
+/* balloons */
+for(let i=0;i<10;i++){
+let b=document.createElement("div")
+b.className="balloon"
+b.innerHTML="🎈"
+b.style.left=Math.random()*100+"vw"
+b.style.animationDuration=(Math.random()*6+6)+"s"
+document.body.appendChild(b)
+}
+
+/* confetti */
+function confetti(n){
+for(let i=0;i<n;i++){
+let c=document.createElement("div")
+c.className="confetti"
+c.style.left=Math.random()*100+"vw"
+c.style.backgroundColor=
+["#ff4d6d","#ffd93d","#6bcBef","#9d4edd","#00f5d4"][Math.floor(Math.random()*5)]
+c.style.animationDuration=(Math.random()*3+2)+"s"
+document.body.appendChild(c)
+}
+}
+confetti(60)
+
+/* open gift */
+function openGift(){
+document.getElementById("gift").style.display="none"
+document.getElementById("title").innerText="Make a wish 🕯"
+document.getElementById("cakeArea").style.display="block"
+
+document.getElementById("music").play()
+typeMessage()
+startMic()
+miniBlowFireworks()
+}
+
+/* typing message */
+function typeMessage(){
+let text="HAPPY BIRTHDAY🎉 I know cheesecake is one of your favorite cakes, so I made one just for you heheh. Blow the candles, and I hope you enjoy your special day!💙🍰"
+let i=0
+function typing(){
+if(i<text.length){
+document.getElementById("message").innerHTML+=text.charAt(i)
+i++
+setTimeout(typing,40)
+}}
+typing()
+}
+
+/* candles */
+let candles=0
+function blow(e,candle){
+e.stopPropagation()
+let flame=candle.querySelector(".flame")
+if(flame){
+flame.remove()
+candles++
+if(candles===3){celebrate()}
+}
+}
+
+/* mic blowing */
+function startMic(){
+navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+let ctx=new AudioContext()
+let mic=ctx.createMediaStreamSource(stream)
+let analyser=ctx.createAnalyser()
+mic.connect(analyser)
+let data=new Uint8Array(analyser.frequencyBinCount)
+function detect(){
+analyser.getByteFrequencyData(data)
+let volume=data.reduce((a,b)=>a+b)/data.length
+if(volume>60){
+document.querySelectorAll(".flame").forEach(f=>f.remove())
+celebrate()
+}
+requestAnimationFrame(detect)
+}
+detect()
+})
+}
+
+/* mini blow for fireworks */
+function miniBlowFireworks(){
+navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+let ctx=new AudioContext()
+let mic=ctx.createMediaStreamSource(stream)
+let analyser=ctx.createAnalyser()
+mic.connect(analyser)
+let data=new Uint8Array(analyser.frequencyBinCount)
+let blown=false
+function detectBlow(){
+analyser.getByteFrequencyData(data)
+let volume=data.reduce((a,b)=>a+b)/data.length
+if(volume>80 && !blown){
+blown=true
+for(let i=0;i<5;i++){
+let f=document.createElement("div")
+f.className="firework"
+f.innerHTML="🎆"
+f.style.left=(Math.random()*60+20)+"vw"
+f.style.top=(Math.random()*40+30)+"vh"
+document.body.appendChild(f)
+document.body.classList.add("shake")
+setTimeout(()=>{document.body.classList.remove("shake")},300)
+}
+setTimeout(()=>{blown=false},1000)
+}
+requestAnimationFrame(detectBlow)
+}
+detectBlow()
+})
+}
+
+/* celebration */
+function celebrate(){
+confetti(120)
+for(let i=0;i<10;i++){
+let f=document.createElement("div")
+f.className="firework"
+f.innerHTML="🎆"
+f.style.left=Math.random()*100+"vw"
+f.style.top=Math.random()*60+"vh"
+document.body.appendChild(f)
+}
+document.getElementById("game").style.display="block"
+startGame()
+}
+
+/* slice cake */
+function sliceCake(){
+document.getElementById("slice").style.display="block"
+}
+
+/* game */
+let score=0
+function startGame(){
+let basket=document.getElementById("basket")
+document.addEventListener("mousemove",e=>{basket.style.left=e.clientX+"px"})
+document.addEventListener("touchmove",e=>{basket.style.left=(e.touches[0].clientX - 30)+"px"})
+setInterval(()=>{
+let cake=document.createElement("div")
+cake.className="fallingCake"
+cake.innerHTML="🍰"
+cake.style.left=Math.random()*100+"vw"
+cake.style.top="0px"
+document.body.appendChild(cake)
+let fall=setInterval(()=>{
+cake.style.top=(cake.offsetTop+12)+"px"
+let basketRect=basket.getBoundingClientRect()
+let cakeRect=cake.getBoundingClientRect()
+if(cakeRect.bottom > basketRect.top && cakeRect.left < basketRect.right && cakeRect.right > basketRect.left){
+cake.remove()
+clearInterval(fall)
+score++
+document.getElementById("score").innerText="Score: "+score
+confetti(10)
+if(score>=10){winGame()}
+}
+if(cake.offsetTop>window.innerHeight){
+cake.remove()
+clearInterval(fall)
+}
+},20)
+},500)
+}
+
+/* win */
+function winGame(){
+confetti(200)
+document.getElementById("game").innerHTML=`
+<h1>🎉 YEAAYY, HAPPY GETTING OLD hahahh 🎉</h1>
+<p>You caught all the cheesecakes!</p>
+<p>Not really getting old tho, just leveling up like a game character 😎</p>
+`
+}
+
+</script>
+</body>
+</html>
