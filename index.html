@@ -16,7 +16,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-font-family: 'Comic Neue', Arial, sans-serif;
+font-family: 'Comic Neue';
 background:linear-gradient(135deg,#73d1f9,#38c8f8,#03b0fa);
 overflow:hidden;
 color:white;
@@ -82,7 +82,7 @@ text-align:center;
 
 <body>
 
-<h1 id="title">Click your birthday gift 🎁</h1>
+<h1 id="title">CLICK HERE🎁</h1>
 <div id="gift" onclick="openGift()">🎁</div>
 
 <div id="cakeArea">
@@ -152,7 +152,7 @@ miniBlowFireworks()
 
 /* typing message */
 function typeMessage(){
-let text="🎉 Happy Birthday, [Name]! 🎉\nHope your day is filled with joy, laughter, and LOTS of cheesecake! 🍰💙 Make a wish and blow the candles! ✨"
+let text="Make a wish and blow the candles! ✨"
 let i=0
 function typing(){
 if(i<text.length){
@@ -285,9 +285,9 @@ clearInterval(fall)
 function winGame(){
 confetti(200)
 document.getElementById("game").innerHTML=`
-<h1>🎉 CONGRATS! 🎉</h1>
-<p>You caught all the cheesecakes! 🍰</p>
-<p>Another year older, another year cooler! 😎✨</p>
+<h1>🎉 YEAAYY YOU CAUGHT ALL THE CHEESECAKES!🍰 </h1>
+
+<p>Another year older, another year cooler! 😎✨ HEHEHE</p>
 <p>Time to eat your reward!</p>
 `
 }
